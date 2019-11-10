@@ -39,6 +39,10 @@ button {
   display: none !important;
 }
 
+button[disabled] {
+  border: 1px solid lightgrey;
+}
+
 .btn {
   cursor: pointer;
   background: transparent;

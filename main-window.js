@@ -7,11 +7,21 @@ const addInput = document.getElementById("add-input");
 
 let isEditMode = false;
 
+addInput.addEventListener("keyup", () => {
+  if (addInput.value) {
+    addButton.removeAttribute("disabled");
+  } else {
+    addButton.setAttribute("disabled", true);
+  }
+});
+
 addButton.addEventListener("click", e => {
   if (!addInput.value) { return; }
   
   ipcRenderer.send("item:add", addInput.value);
+
   addInput.value = "";
+  addButton.setAttribute("disabled", true);
 });
 
 const onEditButtonClick = e => {
