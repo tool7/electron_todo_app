@@ -12,7 +12,8 @@ const createMainWindow = () => {
     height: 800,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
+    autoHideMenuBar: true
   });
 
   mainWindow.loadURL(url.format({
@@ -28,14 +29,14 @@ const createMainMenu = () => {
     submenu: [{
       label: "Themes",
       submenu: [{
-        label: "White",
-        click: () => onColorThemeSelect("white")
+        label: "Light",
+        click: () => onColorThemeSelect("light-theme")
       }, {
         label: "Solarized",
-        click: () => onColorThemeSelect("solarized")
+        click: () => onColorThemeSelect("solarized-theme")
       }, {
-        label: "Black",
-        click: () => onColorThemeSelect("black")
+        label: "Dark",
+        click: () => onColorThemeSelect("dark-theme")
       }]
     }, {
       label: "Quit",
@@ -62,32 +63,31 @@ const createMainMenu = () => {
 
 const setupIpcEventHandlers = () => {
   mainWindow.webContents.once("dom-ready", () => {
-    mainWindow.webContents.send("list:update", store.getData());
+    mainWindow.webContents.send("list-update", store.getData());
   });
 
   ipcMain.on("item:add", (e, text) => {
     store.add(text);
-    mainWindow.webContents.send("list:update", store.getData());
+    mainWindow.webContents.send("list-update", store.getData());
   });
 
   ipcMain.on("item:edit", (e, item) => {
     store.edit(item.id, item.text);
-    mainWindow.webContents.send("list:update", store.getData());
+    mainWindow.webContents.send("list-update", store.getData());
   });
 
   ipcMain.on("item:remove", (e, id) => {
     store.remove(id);
-    mainWindow.webContents.send("list:update", store.getData());
+    mainWindow.webContents.send("list-update", store.getData());
   });
 };
 
-const onColorThemeSelect = theme => {
-
-  console.log(theme);
+const onColorThemeSelect = themeClass => {
+  mainWindow.webContents.send("color-theme", themeClass);
 };
 
 app.on("ready", () => {
-  createMainWindow();
   createMainMenu();
+  createMainWindow();
   setupIpcEventHandlers();
 });

@@ -108,10 +108,29 @@ const createAndAddItemToList = item => {
   todoList.appendChild(todoItemElement);
 };
 
-ipcRenderer.on("list:update", (e, items) => {
+ipcRenderer.on("list-update", (e, items) => {
   clearList();
 
   items.forEach(item => {
     createAndAddItemToList(item);
   });
 });
+
+ipcRenderer.on("color-theme", (e, themeClass) => {
+  const { classList } = document.body;
+  while (classList.length > 0) {
+    classList.remove(classList.item(0));
+  }
+
+  setColorTheme(themeClass);
+});
+
+const setColorTheme = (value, persist = true) => {
+  document.body.classList.add(value);
+  persist && localStorage.setItem("color-theme", value);
+};
+
+const storedColorTheme = localStorage.getItem("color-theme");
+if (storedColorTheme) {
+  setColorTheme(storedColorTheme, false);
+}
