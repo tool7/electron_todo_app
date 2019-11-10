@@ -1,0 +1,114 @@
+/* ===== HTML elements ===== */
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+input {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+
+/* ===== Custom classes ===== */
+
+.btn {
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid gray;
+  border-radius: 2px;
+}
+
+.divider {
+  display: block;
+  width: 20%;
+  margin: 2rem auto;
+  border-bottom: .5px solid grey;
+}
+
+#app-title {
+  font-size: 4rem;
+}
+
+#todo-list {
+  margin: 5rem;
+  user-select: none;
+}
+
+.todo-item {
+  cursor: grab;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: .75rem 0;
+  border-radius: 2px;
+}
+
+.todo-item:hover {
+  background-color: rgba(0, 0, 0, .05);
+}
+
+.todo-item__text {
+  font-size: 2.5rem;
+}
+
+.todo-item__btns {
+  position: absolute;
+  right: 0;
+  /* visibility: hidden; */
+}
+
+.todo-item:hover .todo-item__btns {
+  visibility: visible;
+}
+
+#add-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#add-input {
+  width: 60%;
+  height: 3rem;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  text-align: center;
+}
+
+#add-btn {
+  width: 6rem;
+  height: 3rem;
+}
+
+.edit-btn,
+.remove-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 1rem;
+  font-size: 1.75rem;
+}

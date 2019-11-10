@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>ToDo List App</title>
+
+  <link rel="stylesheet" href="main-window.css">
+</head>
+<body>
+
+  <h1 id="app-title">ToDo</h1>
+  <span class="divider"></span>
+  <ul id="todo-list"></ul>
+
+  <div id="add-form">
+    <input id="add-input" type="text">
+    <button id="add-btn" class="btn">Add</button>
+  </div>
+  
+  <script src="main-window.js"></script>
+
+  <template id="edit-btn-template">
+    <button class="btn edit-btn">&#x2710;</button>
+  </template>
+
+  <template id="remove-btn-template">
+    <button class="btn remove-btn">&#x2716;</button>
+  </template>
+</body>
+</html>
