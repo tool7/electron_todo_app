@@ -65,8 +65,13 @@ const setupIpcEventHandlers = () => {
     mainWindow.webContents.send("list:update", store.getData());
   });
 
-  ipcMain.on("item:add", (e, item) => {
-    store.add(item);
+  ipcMain.on("item:add", (e, text) => {
+    store.add(text);
+    mainWindow.webContents.send("list:update", store.getData());
+  });
+
+  ipcMain.on("item:edit", (e, item) => {
+    store.edit(item.id, item.text);
     mainWindow.webContents.send("list:update", store.getData());
   });
 

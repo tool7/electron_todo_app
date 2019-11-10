@@ -18,8 +18,8 @@ module.exports = {
   getData() {
     return data;
   },
-  add(itemName) {
-    const item = { id: uuidv4(), text: itemName };
+  add(text) {
+    const item = { id: uuidv4(), text };
     data.push(item);
 
     saveDataToFileAsync();
