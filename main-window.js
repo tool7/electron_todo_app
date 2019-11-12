@@ -9,6 +9,15 @@ const addInput = document.getElementById("add-input");
 
 let isEditMode = false;
 
+const onAddButtonClick = () => {
+  if (!addInput.value) { return; }
+  
+  ipcRenderer.send("item:add", addInput.value);
+
+  addInput.value = "";
+  addButton.setAttribute("disabled", true);
+};
+
 const onEditButtonClick = e => {
   const clickedListItem = e.target.parentElement.parentElement;
   if (isEditMode) { return; }
@@ -119,14 +128,12 @@ addInput.addEventListener("keyup", () => {
   }
 });
 
-addButton.addEventListener("click", e => {
-  if (!addInput.value) { return; }
-  
-  ipcRenderer.send("item:add", addInput.value);
-
-  addInput.value = "";
-  addButton.setAttribute("disabled", true);
+addInput.addEventListener("keydown", e => {
+  if (e.keyCode !== 13) { return; }
+  onAddButtonClick();
 });
+
+addButton.addEventListener("click", onAddButtonClick);
 
 ipcRenderer.on("list:update", (e, items) => {
   clearList();
