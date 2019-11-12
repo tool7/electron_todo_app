@@ -1,3 +1,5 @@
+// ========== Variables and function declarations ==========
+
 const electron = require("electron");
 const { ipcRenderer } = electron;
 
@@ -6,23 +8,6 @@ const addButton = document.getElementById("add-btn");
 const addInput = document.getElementById("add-input");
 
 let isEditMode = false;
-
-addInput.addEventListener("keyup", () => {
-  if (addInput.value) {
-    addButton.removeAttribute("disabled");
-  } else {
-    addButton.setAttribute("disabled", true);
-  }
-});
-
-addButton.addEventListener("click", e => {
-  if (!addInput.value) { return; }
-  
-  ipcRenderer.send("item:add", addInput.value);
-
-  addInput.value = "";
-  addButton.setAttribute("disabled", true);
-});
 
 const onEditButtonClick = e => {
   const clickedListItem = e.target.parentElement.parentElement;
@@ -83,6 +68,7 @@ const createAndAddItemToList = item => {
 
   todoItemElement.id = item.id;
   todoItemElement.classList.add("todo-item");
+  todoItemElement.setAttribute("draggable", "true");
 
   textElement.classList.add("todo-item__text");
   textElement.innerHTML = item.text;
@@ -108,9 +94,44 @@ const createAndAddItemToList = item => {
   todoList.appendChild(todoItemElement);
 };
 
-ipcRenderer.on("list-update", (e, items) => {
+const setColorTheme = (value, persist = true) => {
+  document.body.classList.add(value);
+  persist && localStorage.setItem("color-theme", value);
+};
+
+
+// ========== Window initialization ==========
+
+const storedColorTheme = localStorage.getItem("color-theme");
+if (storedColorTheme) {
+  setColorTheme(storedColorTheme, false);
+}
+
+sortable(todoList, elementIdOrderMap => {
+  ipcRenderer.send("list:order-change", elementIdOrderMap);
+});
+
+addInput.addEventListener("keyup", () => {
+  if (addInput.value) {
+    addButton.removeAttribute("disabled");
+  } else {
+    addButton.setAttribute("disabled", true);
+  }
+});
+
+addButton.addEventListener("click", e => {
+  if (!addInput.value) { return; }
+  
+  ipcRenderer.send("item:add", addInput.value);
+
+  addInput.value = "";
+  addButton.setAttribute("disabled", true);
+});
+
+ipcRenderer.on("list:update", (e, items) => {
   clearList();
 
+  items.sort((a, b) => a.order - b.order);
   items.forEach(item => {
     createAndAddItemToList(item);
   });
@@ -124,13 +145,3 @@ ipcRenderer.on("color-theme", (e, themeClass) => {
 
   setColorTheme(themeClass);
 });
-
-const setColorTheme = (value, persist = true) => {
-  document.body.classList.add(value);
-  persist && localStorage.setItem("color-theme", value);
-};
-
-const storedColorTheme = localStorage.getItem("color-theme");
-if (storedColorTheme) {
-  setColorTheme(storedColorTheme, false);
-}

@@ -105,6 +105,10 @@ button[disabled] {
   border-radius: 2px;
 }
 
+.todo-item--ghost {
+  opacity: .3;
+}
+
 .todo-item:hover {
   background-color: rgba(0, 0, 0, .05);
 }

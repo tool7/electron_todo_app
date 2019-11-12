@@ -63,22 +63,26 @@ const createMainMenu = () => {
 
 const setupIpcEventHandlers = () => {
   mainWindow.webContents.once("dom-ready", () => {
-    mainWindow.webContents.send("list-update", store.getData());
+    mainWindow.webContents.send("list:update", store.getData());
   });
 
   ipcMain.on("item:add", (e, text) => {
     store.add(text);
-    mainWindow.webContents.send("list-update", store.getData());
+    mainWindow.webContents.send("list:update", store.getData());
   });
 
   ipcMain.on("item:edit", (e, item) => {
     store.edit(item.id, item.text);
-    mainWindow.webContents.send("list-update", store.getData());
+    mainWindow.webContents.send("list:update", store.getData());
   });
 
   ipcMain.on("item:remove", (e, id) => {
     store.remove(id);
-    mainWindow.webContents.send("list-update", store.getData());
+    mainWindow.webContents.send("list:update", store.getData());
+  });
+
+  ipcMain.on("list:order-change", (e, idOrderMap) => {
+    store.reorder(idOrderMap);
   });
 };
 
