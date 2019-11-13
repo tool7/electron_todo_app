@@ -4,7 +4,7 @@ const getMouseOffset = e => {
     x: e.pageX - targetRect.left,
     y: e.pageY - targetRect.top
   };
-  return offset
+  return offset;
 };
 
 const getElementVerticalCenter = el => {
@@ -20,8 +20,18 @@ const getElementIdOrderMap = children => {
   return idOrderMap;
 };
 
-function sortable(rootEl, callback, ghostClass) {
+function Sortable(rootEl, callback, ghostClass) {
   let dragEl = null;
+
+  const toggleDraggableAttribute = (el, flag) => {
+    flag ? el.setAttribute("draggable", true) : el.removeAttribute("draggable");
+  };
+
+  const toggleDraggableAttributeOnChildren = flag => {
+    Array.from(rootEl.children).forEach(el => {
+      toggleDraggableAttribute(el, flag);
+    });
+  };
 
   const toggleGhostClassOnOtherItems = (itemToExclude, flag) => {
     Array.from(rootEl.children).forEach(el => {
@@ -70,7 +80,7 @@ function sortable(rootEl, callback, ghostClass) {
     callback(idOrderMap);
   }
 
-  rootEl.addEventListener("dragstart", e => {
+  function _onDragStart(e) {
     e.dataTransfer.effectAllowed = "move";
 
     dragEl = e.target;
@@ -78,5 +88,22 @@ function sortable(rootEl, callback, ghostClass) {
 
     rootEl.addEventListener("dragover", _onDragOver, false);
     rootEl.addEventListener("dragend", _onDragEnd, false);
-  }, false);
+  }
+
+  rootEl.addEventListener("dragstart", _onDragStart, false);
+  toggleDraggableAttributeOnChildren(true);
+
+  return {
+    disable: () => {
+      rootEl.removeEventListener("dragstart", _onDragStart, false);
+      toggleDraggableAttributeOnChildren(false);
+    },
+    enable: () => {
+      rootEl.addEventListener("dragstart", _onDragStart, false);
+      toggleDraggableAttributeOnChildren(true);
+    },
+    onElementAdded: el => {
+      toggleDraggableAttribute(el, true)
+    }
+  };
 }

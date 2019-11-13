@@ -8,6 +8,13 @@ const addButton = document.getElementById("add-btn");
 const addInput = document.getElementById("add-input");
 
 let isEditMode = false;
+let sortableList = null;
+
+const initSortableList = () => {
+  sortableList = new Sortable(todoList, elementIdOrderMap => {
+    ipcRenderer.send("list:order-change", elementIdOrderMap);
+  }, "todo-item--ghost");
+};
 
 const onAddButtonClick = () => {
   if (!addInput.value) { return; }
@@ -16,49 +23,6 @@ const onAddButtonClick = () => {
 
   addInput.value = "";
   addButton.setAttribute("disabled", true);
-};
-
-const onEditButtonClick = e => {
-  const clickedListItem = e.target.parentElement.parentElement;
-  if (isEditMode) { return; }
-
-  const textElement = clickedListItem.querySelector(".todo-item__text");
-  const controlsDivElement = clickedListItem.querySelector(".todo-item__controls");
-  const editDivElement = clickedListItem.querySelector(".todo-item__edit-container");
-  const editInputElement = clickedListItem.querySelector(".todo-item__edit-input");
-
-  textElement.classList.add("display-none");
-  controlsDivElement.classList.add("display-none");
-  editDivElement.classList.remove("display-none");
-  editInputElement.focus();
-
-  isEditMode = true;
-
-  editInputElement.addEventListener("keydown", e => {
-    if (e.keyCode === 13 || e.keyCode === 27) {
-      textElement.classList.remove("display-none");
-      controlsDivElement.classList.remove("display-none");
-      editDivElement.classList.add("display-none");
-      
-      isEditMode = false;
-    }
-
-    if (e.keyCode === 13 && editInputElement.value !== "") {
-      ipcRenderer.send("item:edit", {
-        id: clickedListItem.id,
-        text: editInputElement.value
-      });
-    }
-  });
-};
-
-const onRemoveButtonClick = e => {
-  const clickedListItem = e.target.parentElement.parentElement;
-  ipcRenderer.send("item:remove", clickedListItem.id);
-};
-
-const clearList = () => {
-  todoList.innerHTML = null;
 };
 
 const createAndAddItemToList = item => {
@@ -77,8 +41,39 @@ const createAndAddItemToList = item => {
   textElement.innerHTML = item.text;
   editInputElement.value = item.text;
 
-  editButtonElement.addEventListener("click", onEditButtonClick);
-  removeButtonElement.addEventListener("click", onRemoveButtonClick);
+  editButtonElement.addEventListener("click", e => {
+    if (isEditMode) { return; }
+    
+    textElement.classList.add("display-none");
+    controlsDivElement.classList.add("display-none");
+    editDivElement.classList.remove("display-none");
+    editInputElement.focus();
+  
+    isEditMode = true;
+    sortableList.disable();
+  });
+
+  removeButtonElement.addEventListener("click", e => {
+    ipcRenderer.send("item:remove", todoItemElement.id);
+  });
+
+  editInputElement.addEventListener("keydown", e => {
+    if (e.keyCode === 13 || e.keyCode === 27) {
+      textElement.classList.remove("display-none");
+      controlsDivElement.classList.remove("display-none");
+      editDivElement.classList.add("display-none");
+
+      isEditMode = false;
+      sortableList.enable();
+    }
+
+    if (e.keyCode === 13 && editInputElement.value !== "") {
+      ipcRenderer.send("item:edit", {
+        id: todoItemElement.id,
+        text: editInputElement.value
+      });
+    }
+  });
 
   controlsDivElement.appendChild(editButtonElement);
   controlsDivElement.appendChild(removeButtonElement);
@@ -88,6 +83,8 @@ const createAndAddItemToList = item => {
   editDivElement.appendChild(editMessageElement);
   todoItemElement.appendChild(editDivElement);
   todoList.appendChild(todoItemElement);
+
+  return todoItemElement;
 };
 
 const setColorTheme = (value, persist = true) => {
@@ -102,10 +99,6 @@ const storedColorTheme = localStorage.getItem("color-theme");
 if (storedColorTheme) {
   setColorTheme(storedColorTheme, false);
 }
-
-sortable(todoList, elementIdOrderMap => {
-  ipcRenderer.send("list:order-change", elementIdOrderMap);
-}, "todo-item--ghost");
 
 addInput.addEventListener("keyup", () => {
   if (addInput.value) {
@@ -122,13 +115,29 @@ addInput.addEventListener("keydown", e => {
 
 addButton.addEventListener("click", onAddButtonClick);
 
-ipcRenderer.on("list:update", (e, items) => {
-  clearList();
-
+ipcRenderer.on("list:init", (e, items) => {
   items.sort((a, b) => a.order - b.order);
   items.forEach(item => {
     createAndAddItemToList(item);
   });
+
+  initSortableList();
+});
+
+ipcRenderer.on("list:add-item", (e, item) => {
+  const element = createAndAddItemToList(item);
+  sortableList.onElementAdded(element);
+});
+
+ipcRenderer.on("list:edit-item", (e, item) => {
+  const todoItem = Array.from(todoList.children).find(el => el.id === item.id);
+  const textElement = todoItem.querySelector(".todo-item__text");
+  textElement.innerHTML = item.text;
+});
+
+ipcRenderer.on("list:remove-item", (e, itemId) => {
+  const todoItem = Array.from(todoList.children).find(el => el.id === itemId);
+  todoList.removeChild(todoItem);
 });
 
 ipcRenderer.on("color-theme", (e, themeClass) => {

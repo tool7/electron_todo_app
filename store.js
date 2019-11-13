@@ -27,6 +27,7 @@ module.exports = {
     data.push(item);
 
     saveDataToFileAsync();
+    return item;
   },
   edit(itemId, text) {
     const item = data.find(i => i.id === itemId);
