@@ -152,14 +152,14 @@ button[disabled] {
   opacity: .5;
 }
 
-.edit-input {
+.todo-item__edit-input {
   width: 100%;
   height: 3rem;
   font-size: 2rem;
   text-align: center;
 }
 
-.edit-message {
+.todo-item__edit-message {
   font-size: 1.2rem;
 }
 
@@ -168,10 +168,17 @@ button[disabled] {
   height: 3rem;
 }
 
-.edit-btn,
-.remove-btn {
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-right: 1rem;
-  font-size: 1.75rem;
+.todo-item__edit-btn {
+  width: 3rem;
+}
+
+.todo-item__remove-btn {
+  width: 5rem;
+}
+
+.todo-item__edit-btn,
+.todo-item__remove-btn {
+  height: 2rem;
+  margin-right: .5rem;
+  font-size: 1.2rem;
 }

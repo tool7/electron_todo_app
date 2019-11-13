@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>ToDo List App</title>
+  <title>ToDo List</title>
 
   <link rel="stylesheet" href="main-window.css">
 </head>
@@ -20,11 +20,20 @@
   <script src="sortable.js"></script>
   <script src="main-window.js"></script>
 
-  <template id="edit-btn-template">
-    <button class="btn edit-btn">&#x2710;</button>
-  </template>
-  <template id="remove-btn-template">
-    <button class="btn remove-btn">&#x2716;</button>
+  <template id="todo-item-template">
+    <li class="todo-item" draggable="true">
+      <span class="todo-item__text"></span>
+
+      <div class="todo-item__controls">
+        <button class="btn todo-item__edit-btn">Edit</button>
+        <button class="btn todo-item__remove-btn">Remove</button>
+      </div>
+      
+      <div class="todo-item__edit-container display-none">
+        <input class="todo-item__edit-input" type="text">
+        <span class="todo-item__edit-message">Press Enter to confirm or Esc. to cancel edit mode</span>
+      </div>
+    </li>
   </template>
 </body>
 </html>

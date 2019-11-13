@@ -62,36 +62,23 @@ const clearList = () => {
 };
 
 const createAndAddItemToList = item => {
-  const todoItemElement = document.createElement("li");
-  const editButtonTemplate = document.getElementById("edit-btn-template");
-  const removeButtonTemplate = document.getElementById("remove-btn-template");
-  const editButtonFragment = document.importNode(editButtonTemplate.content, true);
-  const removeButtonFragment = document.importNode(removeButtonTemplate.content, true);
-  const editButtonElement = editButtonFragment.querySelector("button");
-  const removeButtonElement = removeButtonFragment.querySelector("button");
-  const textElement = document.createElement("span");
-  const controlsDivElement = document.createElement("div");
-  const editDivElement = document.createElement("div");
-  const editInputElement = document.createElement("input");
-  const editMessageElement = document.createElement("span");
+  const todoItemTemplate = document.getElementById("todo-item-template");
+  const todoItemFragment = document.importNode(todoItemTemplate.content, true);
+  const todoItemElement = todoItemFragment.querySelector(".todo-item");
+  const textElement = todoItemFragment.querySelector(".todo-item__text");
+  const controlsDivElement = todoItemFragment.querySelector(".todo-item__controls");
+  const editDivElement = todoItemFragment.querySelector(".todo-item__edit-container");
+  const editInputElement = todoItemFragment.querySelector(".todo-item__edit-input");
+  const editMessageElement = todoItemFragment.querySelector(".todo-item__edit-message");
+  const editButtonElement = todoItemFragment.querySelector(".todo-item__edit-btn");
+  const removeButtonElement = todoItemFragment.querySelector(".todo-item__remove-btn");
 
   todoItemElement.id = item.id;
-  todoItemElement.classList.add("todo-item");
-  todoItemElement.setAttribute("draggable", "true");
-
-  textElement.classList.add("todo-item__text");
   textElement.innerHTML = item.text;
+  editInputElement.value = item.text;
 
-  controlsDivElement.classList.add("todo-item__controls");
   editButtonElement.addEventListener("click", onEditButtonClick);
   removeButtonElement.addEventListener("click", onRemoveButtonClick);
-
-  editDivElement.classList.add("todo-item__edit-container", "display-none");
-  editInputElement.type = "text";
-  editInputElement.value = item.text;
-  editInputElement.classList.add("edit-input");
-  editMessageElement.innerHTML = "Press Enter to confirm or Esc. to cancel edit mode";
-  editMessageElement.classList.add("edit-message");
 
   controlsDivElement.appendChild(editButtonElement);
   controlsDivElement.appendChild(removeButtonElement);
