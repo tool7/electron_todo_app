@@ -20,8 +20,20 @@ const getElementIdOrderMap = children => {
   return idOrderMap;
 };
 
-function sortable(rootEl, callback) {
+function sortable(rootEl, callback, ghostClass) {
   let dragEl = null;
+
+  const toggleGhostClassOnOtherItems = (itemToExclude, flag) => {
+    Array.from(rootEl.children).forEach(el => {
+      if (el === itemToExclude) { return; }
+
+      if (flag) {
+        el.classList.add(ghostClass);
+      } else {
+        el.classList.remove(ghostClass);
+      }
+    });
+  };
 
   function _onDragOver(e) {
     e.preventDefault();
@@ -49,7 +61,7 @@ function sortable(rootEl, callback) {
   function _onDragEnd(e) {
     e.preventDefault();
 
-    dragEl.classList.remove("todo-item--ghost");
+    ghostClass && toggleGhostClassOnOtherItems(dragEl, false);
 
     rootEl.removeEventListener("dragover", _onDragOver, false);
     rootEl.removeEventListener("dragend", _onDragEnd, false);
@@ -62,7 +74,7 @@ function sortable(rootEl, callback) {
     e.dataTransfer.effectAllowed = "move";
 
     dragEl = e.target;
-    dragEl.classList.add("todo-item--ghost");
+    ghostClass && toggleGhostClassOnOtherItems(dragEl, true);
 
     rootEl.addEventListener("dragover", _onDragOver, false);
     rootEl.addEventListener("dragend", _onDragEnd, false);

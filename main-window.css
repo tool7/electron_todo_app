@@ -148,6 +148,11 @@ button[disabled] {
   text-align: center;
 }
 
+#add-btn {
+  width: 6rem;
+  height: 3rem;
+}
+
 #add-input::placeholder {
   opacity: .5;
 }
@@ -161,11 +166,6 @@ button[disabled] {
 
 .todo-item__edit-message {
   font-size: 1.2rem;
-}
-
-#add-btn {
-  width: 6rem;
-  height: 3rem;
 }
 
 .todo-item__edit-btn {

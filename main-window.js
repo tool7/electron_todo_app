@@ -25,7 +25,7 @@ const onEditButtonClick = e => {
   const textElement = clickedListItem.querySelector(".todo-item__text");
   const controlsDivElement = clickedListItem.querySelector(".todo-item__controls");
   const editDivElement = clickedListItem.querySelector(".todo-item__edit-container");
-  const editInputElement = clickedListItem.querySelector(".edit-input");
+  const editInputElement = clickedListItem.querySelector(".todo-item__edit-input");
 
   textElement.classList.add("display-none");
   controlsDivElement.classList.add("display-none");
@@ -105,7 +105,7 @@ if (storedColorTheme) {
 
 sortable(todoList, elementIdOrderMap => {
   ipcRenderer.send("list:order-change", elementIdOrderMap);
-});
+}, "todo-item--ghost");
 
 addInput.addEventListener("keyup", () => {
   if (addInput.value) {
