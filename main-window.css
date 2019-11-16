@@ -3,21 +3,29 @@
 :root {
   --bgColor: #ffffff;
   --txtColor: #000000;
+  --btnBorder: 1px solid grey;
+  --inputBorderColor: #e2e2e2;
 }
 
 .light-theme {
   --bgColor: #ffffff;
   --txtColor: #000000;
+  --btnBorder: 1px solid grey;
+  --inputBorderColor: #9c9c9c;
 }
 
 .solarized-theme {
   --bgColor: #ffe9bf;
-  --txtColor: #2c2c2c;
+  --txtColor: #4b3914;
+  --btnBorder: 1px solid #7c5f26;
+  --inputBorderColor: #7c5f26;
 }
 
 .dark-theme {
   --bgColor: #222222;
   --txtColor: #ffffff;
+  --btnBorder: 1px solid lightgrey;
+  --inputBorderColor: #a8a8a8;
 }
 
 
@@ -50,14 +58,20 @@ ul {
   list-style-type: none;
 }
 
-input {
+input,
+button {
+  border: none;
   outline: none;
+}
+
+input {
+  background-color: var(--bgColor);
+  color: var(--txtColor);
+  border: 1px solid var(--inputBorderColor);
 }
 
 button {
   cursor: pointer;
-  border: none;
-  outline: none;
 }
 
 
@@ -68,13 +82,13 @@ button {
 }
 
 button[disabled] {
-  border: 1px solid lightgrey;
+  opacity: .6;
 }
 
 .btn {
   cursor: pointer;
   background: transparent;
-  border: 1px solid gray;
+  border: var(--btnBorder);
   border-radius: 2px;
 }
 
@@ -142,19 +156,28 @@ button[disabled] {
 
 #add-input {
   width: 60%;
-  height: 3rem;
+  height: 3.2rem;
   margin-bottom: 1rem;
   font-size: 2rem;
   text-align: center;
+  opacity: .6;
+}
+
+#add-input:focus {
+  opacity: 1;
 }
 
 #add-btn {
   width: 6rem;
   height: 3rem;
+  background-color: var(--bgColor);
+  color: var(--txtColor);
 }
 
 #add-input::placeholder {
-  opacity: .5;
+  font-size: 1.6rem;
+  color: var(--txtColor);
+  opacity: .6;
 }
 
 .todo-item__edit-input {
@@ -178,7 +201,14 @@ button[disabled] {
 
 .todo-item__edit-btn,
 .todo-item__remove-btn {
+  opacity: .5;
   height: 2rem;
   margin-right: .5rem;
   font-size: 1.2rem;
+  color: var(--txtColor);
+}
+
+.todo-item__edit-btn:hover,
+.todo-item__remove-btn:hover {
+  opacity: 1;
 }
