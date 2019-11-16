@@ -1,15 +1,17 @@
 const fs = require("fs");
 const uuidv4 = require("uuid/v4");
 
-if (!fs.existsSync("data.json")) {
-  fs.writeFileSync("data.json", "[]");
+const fileName = "todo-items.json";
+
+if (!fs.existsSync(fileName)) {
+  fs.writeFileSync(fileName, "[]");
 }
 
-const rawData = fs.readFileSync("data.json");
+const rawData = fs.readFileSync(fileName);
 let data = JSON.parse(rawData);
 
 const saveDataToFileAsync = () => {
-  fs.writeFile("data.json", JSON.stringify(data), err => {
+  fs.writeFile(fileName, JSON.stringify(data), err => {
     if (err) { throw err; }
   });
 };
