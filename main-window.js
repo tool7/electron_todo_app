@@ -100,6 +100,15 @@ if (storedColorTheme) {
   setColorTheme(storedColorTheme, false);
 }
 
+addInput.addEventListener("keydown", e => {
+  if (!addInput.value || e.keyCode === 8) { return; }
+
+  const textLength = addInput.value.length;
+  if (textLength + 1 > 80) {
+    e.preventDefault();
+  }
+});
+
 addInput.addEventListener("keyup", () => {
   if (addInput.value) {
     addButton.removeAttribute("disabled");
