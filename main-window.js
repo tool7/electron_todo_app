@@ -92,12 +92,22 @@ const setColorTheme = (value, persist = true) => {
   persist && localStorage.setItem("color-theme", value);
 };
 
+const setFontFamily = (value, persist = true) => {
+  document.body.style.fontFamily = value;
+  persist && localStorage.setItem("font-family", value);
+};
+
 
 // ========== Window initialization ==========
 
 const storedColorTheme = localStorage.getItem("color-theme");
 if (storedColorTheme) {
   setColorTheme(storedColorTheme, false);
+}
+
+const storedFontFamily = localStorage.getItem("font-family");
+if (storedFontFamily) {
+  setFontFamily(storedFontFamily, false);
 }
 
 addInput.addEventListener("keydown", e => {
@@ -156,4 +166,8 @@ ipcRenderer.on("color-theme", (e, themeClass) => {
   }
 
   setColorTheme(themeClass);
+});
+
+ipcRenderer.on("font-family", (e, fontFamily) => {
+  setFontFamily(fontFamily);
 });

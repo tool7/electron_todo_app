@@ -45,12 +45,12 @@
 
 html {
   font-size: 62.5%;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 body {
   background-color: var(--bgColor);
   color: var(--txtColor);
+  font-family: Calibri;
   user-select: none;
 }
 
@@ -170,6 +170,7 @@ button[disabled] {
   width: 70%;
   height: 3.2rem;
   margin-bottom: 1rem;
+  font-family: inherit;
   font-size: 2rem;
   text-align: center;
   opacity: .6;
@@ -184,6 +185,7 @@ button[disabled] {
   height: 3rem;
   background-color: var(--bgColor);
   color: var(--txtColor);
+  font-family: inherit;
 }
 
 #add-input::placeholder {

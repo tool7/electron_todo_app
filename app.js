@@ -25,7 +25,7 @@ const createMainWindow = () => {
 
 const createMainMenu = () => {
   const mainMenuTemplate = [{
-    label: "File",
+    label: "Options",
     submenu: [{
       label: "Themes",
       submenu: [{
@@ -37,6 +37,27 @@ const createMainMenu = () => {
       }, {
         label: "Dark",
         click: () => onColorThemeSelect("dark-theme")
+      }]
+    }, {
+      label: "Text Font",
+      submenu: [{
+        label: "Calibri",
+        click: () => onFontFamilySelect("Calibri")
+      }, {
+        label: "Verdana",
+        click: () => onFontFamilySelect("Verdana")
+      }, {
+        label: "Georgia",
+        click: () => onFontFamilySelect("Georgia")
+      }, {
+        label: "Segoe UI",
+        click: () => onFontFamilySelect("Segoe UI")
+      }, {
+        label: "Impact",
+        click: () => onFontFamilySelect("Impact")
+      }, {
+        label: "Cursive",
+        click: () => onFontFamilySelect("cursive")
       }]
     }, {
       label: "Quit",
@@ -88,6 +109,10 @@ const setupIpcEventHandlers = () => {
 
 const onColorThemeSelect = themeClass => {
   mainWindow.webContents.send("color-theme", themeClass);
+};
+
+const onFontFamilySelect = fontFamily => {
+  mainWindow.webContents.send("font-family", fontFamily);
 };
 
 app.on("ready", () => {
