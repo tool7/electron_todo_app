@@ -5,6 +5,7 @@
   --txtColor: #000000;
   --btnBorder: 1px solid grey;
   --inputBorderColor: #e2e2e2;
+  --txtSelectionColor: grey;
 }
 
 .light-theme {
@@ -12,6 +13,7 @@
   --txtColor: #000000;
   --btnBorder: 1px solid grey;
   --inputBorderColor: #9c9c9c;
+  --txtSelectionColor: #acacac;
 }
 
 .solarized-theme {
@@ -19,6 +21,7 @@
   --txtColor: #4b3914;
   --btnBorder: 1px solid #7c5f26;
   --inputBorderColor: #7c5f26;
+  --txtSelectionColor: #ac8b49;
 }
 
 .dark-theme {
@@ -26,6 +29,7 @@
   --txtColor: #ffffff;
   --btnBorder: 1px solid lightgrey;
   --inputBorderColor: #a8a8a8;
+  --txtSelectionColor: lightgrey;
 }
 
 
@@ -47,6 +51,7 @@ html {
 body {
   background-color: var(--bgColor);
   color: var(--txtColor);
+  user-select: none;
 }
 
 h1 {
@@ -68,6 +73,10 @@ input {
   background-color: var(--bgColor);
   color: var(--txtColor);
   border: 1px solid var(--inputBorderColor);
+}
+
+input::selection {
+  background-color: var(--txtSelectionColor);
 }
 
 button {
@@ -101,11 +110,11 @@ button[disabled] {
 
 #app-title {
   margin-top: 2rem;
-  font-size: 4rem;
+  font-size: 3.5rem;
 }
 
 #todo-list {
-  margin: 5rem;
+  margin: 2rem 5rem 4rem 5rem;
   user-select: none;
 }
 
@@ -128,7 +137,7 @@ button[disabled] {
 }
 
 .todo-item__text {
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 .todo-item__controls {
@@ -149,13 +158,16 @@ button[disabled] {
 }
 
 #add-form {
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  bottom: 2rem;
 }
 
 #add-input {
-  width: 60%;
+  width: 70%;
   height: 3.2rem;
   margin-bottom: 1rem;
   font-size: 2rem;
@@ -192,11 +204,11 @@ button[disabled] {
 }
 
 .todo-item__edit-btn {
-  width: 3rem;
+  width: 3.5rem;
 }
 
 .todo-item__remove-btn {
-  width: 5rem;
+  width: 5.5rem;
 }
 
 .todo-item__edit-btn,

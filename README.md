@@ -1,2 +1,2 @@
-# ToDo List App
-Simple ToDo desktop app implemented with Electron
+# TODO List App
+Simple TODO desktop app implemented with Electron
