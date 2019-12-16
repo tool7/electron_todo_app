@@ -14,4 +14,6 @@
 ***
 
 ### Screenshots:
-![screenshot]()
+![screenshot-light-theme](https://github.com/tool7/electron_todo_app/blob/master/assets/screenshot-light-theme.jpg?raw=true)
+![screenshot-solarized-theme](https://github.com/tool7/electron_todo_app/blob/master/assets/screenshot-solarized-theme.jpg?raw=true)
+![screenshot-dark-theme](https://github.com/tool7/electron_todo_app/blob/master/assets/screenshot-dark-theme.jpg?raw=true)
