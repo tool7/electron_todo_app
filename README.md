@@ -1,2 +1,17 @@
 # TODO List App
-Simple TODO desktop app implemented with Electron
+
+### Simple TODO desktop app implemented with Electron.
+***
+
+### Installation steps:
+1. Install [npm](https://nodejs.org/en/) package manager
+2. Download the project
+3. In order to set the path for storage file (where TODO items will get stored) open **./store.js** file and change *STORAGE_FILE_PATH* constant to specific file path on your disk 
+4. Using terminal navigate to project directory
+5. In terminal, run **npm run package-win** command if you are on Windows, **npm run package-mac** if you are on Mac, or **npm run package-linux** if you are on Linux
+6. After commands finish you can find an executable file in **release-builds** folder
+
+***
+
+### Screenshots:
+![screenshot]()
