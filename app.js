@@ -8,6 +8,7 @@ let mainWindow = null;
 
 const createMainWindow = () => {
   mainWindow = new BrowserWindow({
+    icon: "./favicon.ico",
     width: 1000,
     height: 800,
     webPreferences: {
