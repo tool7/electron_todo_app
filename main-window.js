@@ -82,7 +82,7 @@ const createAndAddItemToList = item => {
   editDivElement.appendChild(editInputElement);
   editDivElement.appendChild(editMessageElement);
   todoItemElement.appendChild(editDivElement);
-  todoList.appendChild(todoItemElement);
+  todoList.prepend(todoItemElement);
 
   return todoItemElement;
 };
