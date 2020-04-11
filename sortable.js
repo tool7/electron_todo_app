@@ -15,7 +15,8 @@ const getElementVerticalCenter = el => {
 const getElementIdOrderMap = children => {
   let idOrderMap = {};
   for (let i = 0; i < children.length; i++) {
-    idOrderMap[children[i].id] = i + 1;
+    const order = children.length - i;
+    idOrderMap[children[i].id] = order;
   }
   return idOrderMap;
 };
