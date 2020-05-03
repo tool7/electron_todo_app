@@ -135,10 +135,6 @@ button[disabled] {
   background-color: rgba(0, 0, 0, .05);
 }
 
-.todo-item__text {
-  font-size: 2rem;
-}
-
 .todo-item__controls {
   position: absolute;
   right: 0;

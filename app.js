@@ -44,7 +44,7 @@ const createMenu = () => {
         click: () => onColorThemeSelect("dark-theme")
       }]
     }, {
-      label: "Text Font",
+      label: "Font family",
       submenu: [{
         label: "Calibri",
         click: () => onFontFamilySelect("Calibri")
@@ -63,6 +63,24 @@ const createMenu = () => {
       }, {
         label: "Cursive",
         click: () => onFontFamilySelect("cursive")
+      }]
+    }, {
+      label: "Font size",
+      submenu: [{
+        label: "Extra small",
+        click: () => onFontSizeSelect("1.5rem")
+      }, {
+        label: "Small",
+        click: () => onFontSizeSelect("1.8rem")
+      }, {
+        label: "Medium",
+        click: () => onFontSizeSelect("2rem")
+      }, {
+        label: "Large",
+        click: () => onFontSizeSelect("2.5rem")
+      }, {
+        label: "Extra large",
+        click: () => onFontSizeSelect("3rem")
       }]
     }, {
       label: "Quit",
@@ -128,6 +146,10 @@ const onColorThemeSelect = themeClass => {
 
 const onFontFamilySelect = fontFamily => {
   mainWindow.webContents.send("font-family", fontFamily);
+};
+
+const onFontSizeSelect = fontSize => {
+  mainWindow.webContents.send("font-size", fontSize);
 };
 
 app.on("ready", () => {

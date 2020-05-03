@@ -101,6 +101,11 @@ const setFontFamily = (value, persist = true) => {
   persist && localStorage.setItem("font-family", value);
 };
 
+const setFontSize = (value, persist = true) => {
+  todoList.style.fontSize = value;
+  persist && localStorage.setItem("font-size", value);
+};
+
 
 // ========== Window initialization ==========
 
@@ -112,6 +117,11 @@ if (storedColorTheme) {
 const storedFontFamily = localStorage.getItem("font-family");
 if (storedFontFamily) {
   setFontFamily(storedFontFamily, false);
+}
+
+const storedFontSize = localStorage.getItem("font-size");
+if (storedFontSize) {
+  setFontSize(storedFontSize, false);
 }
 
 addInput.addEventListener("keydown", e => {
@@ -174,6 +184,10 @@ ipcRenderer.on("color-theme", (e, themeClass) => {
 
 ipcRenderer.on("font-family", (e, fontFamily) => {
   setFontFamily(fontFamily);
+});
+
+ipcRenderer.on("font-size", (e, fontSize) => {
+  setFontSize(fontSize);
 });
 
 // ========== Menu-bar initialization ==========
