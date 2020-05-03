@@ -95,7 +95,6 @@ button[disabled] {
 }
 
 .btn {
-  cursor: pointer;
   background: transparent;
   border: var(--btnBorder);
   border-radius: 2px;
@@ -225,4 +224,36 @@ button[disabled] {
 .todo-item__edit-btn:hover,
 .todo-item__remove-btn:hover {
   opacity: 1;
+}
+
+/* ===== Menu bar ===== */
+#menu-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+  background: var(--bgColor);
+  -webkit-app-region: drag;
+}
+
+#menu-bar > div {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu-bar-btn {
+  height: 100%;
+  padding: 0 15px;
+  background: transparent;
+  -webkit-app-region: no-drag;
+}
+
+.menu-bar-btn:hover {
+  background: rgba(221, 221, 221, 0.2);
+}
+
+#close-btn:hover {
+  background: rgb(255, 0, 0);
 }

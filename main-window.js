@@ -1,11 +1,15 @@
 // ========== Variables and function declarations ==========
 
 const electron = require("electron");
-const { ipcRenderer } = electron;
+const { remote, ipcRenderer } = electron;
+const browserWindow = remote.getCurrentWindow();
 
 const todoList = document.getElementById("todo-list");
 const addButton = document.getElementById("add-btn");
 const addInput = document.getElementById("add-input");
+const hamburgerButton = document.getElementById("hamburger-btn");
+const minimizeButton = document.getElementById("minimize-btn");
+const closeButton = document.getElementById("close-btn");
 
 let isEditMode = false;
 let sortableList = null;
@@ -170,4 +174,18 @@ ipcRenderer.on("color-theme", (e, themeClass) => {
 
 ipcRenderer.on("font-family", (e, fontFamily) => {
   setFontFamily(fontFamily);
+});
+
+// ========== Menu-bar initialization ==========
+hamburgerButton.addEventListener("click", e => {
+  const { x, y } = e;
+  ipcRenderer.send("menu:show", { x, y });
+});
+
+minimizeButton.addEventListener("click", e => {
+  browserWindow.minimize();
+});
+
+closeButton.addEventListener("click", e => {
+  browserWindow.close();
 });

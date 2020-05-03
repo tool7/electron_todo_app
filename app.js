@@ -4,7 +4,10 @@ const path = require("path");
 const store = require("./store.js");
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
+let menu = null;
 let mainWindow = null;
+
+const isMac = process.platform === "darwin";
 
 const createMainWindow = () => {
   mainWindow = new BrowserWindow({
@@ -14,7 +17,8 @@ const createMainWindow = () => {
     webPreferences: {
       nodeIntegration: true
     },
-    autoHideMenuBar: true
+    autoHideMenuBar: true,
+    frame: false
   });
 
   mainWindow.loadURL(url.format({
@@ -24,8 +28,8 @@ const createMainWindow = () => {
   }));
 };
 
-const createMainMenu = () => {
-  const mainMenuTemplate = [{
+const createMenu = () => {
+  const menuTemplate = [{
     label: "Options",
     submenu: [{
       label: "Themes",
@@ -62,7 +66,7 @@ const createMainMenu = () => {
       }]
     }, {
       label: "Quit",
-      accelerator: process.platform === "darwin" ? "Command+W" : "Ctrl+W",
+      accelerator: isMac ? "Command+W" : "Ctrl+W",
       click() {
         app.quit();
       }
@@ -70,17 +74,17 @@ const createMainMenu = () => {
   }];
   
   if (process.env.NODE_ENV !== "production") {
-    mainMenuTemplate[0].submenu.unshift({
+    menuTemplate[0].submenu.unshift({
       label: "Developer Tools",
-      accelerator: process.platform === "darwin" ? "Command+I" : "F12",
+      accelerator: isMac ? "Command+I" : "F12",
       click(_, focusedWindow) {
         focusedWindow.toggleDevTools();
       }
     });
   }
 
-  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-  Menu.setApplicationMenu(mainMenu);
+  menu = Menu.buildFromTemplate(menuTemplate);
+  Menu.setApplicationMenu(menu);
 };
 
 const setupIpcEventHandlers = () => {
@@ -106,6 +110,16 @@ const setupIpcEventHandlers = () => {
   ipcMain.on("list:order-change", (e, idOrderMap) => {
     store.reorder(idOrderMap);
   });
+
+  ipcMain.on("menu:show", (e, coords) => {
+    if (isMac) { return; }
+
+    menu.popup({
+      window: mainWindow,
+      x: coords.x,
+      y: coords.y
+    });
+  });
 };
 
 const onColorThemeSelect = themeClass => {
@@ -117,7 +131,7 @@ const onFontFamilySelect = fontFamily => {
 };
 
 app.on("ready", () => {
-  createMainMenu();
+  createMenu();
   createMainWindow();
   setupIpcEventHandlers();
 });
