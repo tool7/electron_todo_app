@@ -91,6 +91,11 @@ const createAndAddItemToList = item => {
   return todoItemElement;
 };
 
+const setWindowSize = (size) => {
+  const { w, h } = size;
+  browserWindow.setSize(w, h);
+};
+
 const setColorTheme = (value, persist = true) => {
   document.body.classList.add(value);
   persist && localStorage.setItem("color-theme", value);
@@ -109,6 +114,12 @@ const setFontSize = (value, persist = true) => {
 
 // ========== Window initialization ==========
 
+const storedWindowSize = localStorage.getItem("window-size");
+if (storedWindowSize) {
+  const size = JSON.parse(storedWindowSize);
+  setWindowSize(size);
+}
+
 const storedColorTheme = localStorage.getItem("color-theme");
 if (storedColorTheme) {
   setColorTheme(storedColorTheme, false);
@@ -123,6 +134,13 @@ const storedFontSize = localStorage.getItem("font-size");
 if (storedFontSize) {
   setFontSize(storedFontSize, false);
 }
+
+window.addEventListener("resize", e => {
+  const { innerWidth, innerHeight } = window;
+  const size = JSON.stringify({ w: innerWidth, h: innerHeight });
+
+  localStorage.setItem("window-size", size);
+});
 
 addInput.addEventListener("keydown", e => {
   if (!addInput.value || e.keyCode === 8) { return; }
