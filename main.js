@@ -12,10 +12,10 @@ const isMac = process.platform === "darwin";
 const createAppWindow = () => {
   appWindow = new BrowserWindow({
     icon: "./favicon.ico",
-    width: 1000,
-    height: 800,
-    minWidth: 500,
-    minHeight: 500,
+    width: 800,
+    height: 600,
+    minWidth: 250,
+    minHeight: 250,
     webPreferences: {
       nodeIntegration: true
     },
