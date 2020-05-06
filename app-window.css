@@ -4,6 +4,7 @@
   --bgColor: #ffffff;
   --txtColor: #000000;
   --btnBorder: 1px solid grey;
+  --btnHoverBgColor: rgba(200, 200, 200, 0.2);
   --inputBorderColor: #e2e2e2;
   --txtSelectionColor: grey;
 }
@@ -12,6 +13,7 @@
   --bgColor: #ffffff;
   --txtColor: #000000;
   --btnBorder: 1px solid grey;
+  --btnHoverBgColor: rgba(200, 200, 200, 0.5);
   --inputBorderColor: #9c9c9c;
   --txtSelectionColor: #acacac;
 }
@@ -20,6 +22,7 @@
   --bgColor: #ffe9bf;
   --txtColor: #4b3914;
   --btnBorder: 1px solid #7c5f26;
+  --btnHoverBgColor: rgba(255, 250, 240, 1);
   --inputBorderColor: #7c5f26;
   --txtSelectionColor: #ac8b49;
 }
@@ -28,6 +31,7 @@
   --bgColor: #222222;
   --txtColor: #ffffff;
   --btnBorder: 1px solid lightgrey;
+  --btnHoverBgColor: rgba(200, 200, 200, 0.2);
   --inputBorderColor: #a8a8a8;
   --txtSelectionColor: lightgrey;
 }
@@ -242,12 +246,13 @@ button[disabled] {
 .menu-bar-btn {
   height: 100%;
   padding: 0 15px;
+  color: var(--txtColor);
   background: transparent;
   -webkit-app-region: no-drag;
 }
 
 .menu-bar-btn:hover {
-  background: rgba(221, 221, 221, 0.2);
+  background: var(--btnHoverBgColor);
 }
 
 #close-btn:hover {
