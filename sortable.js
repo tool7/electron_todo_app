@@ -60,7 +60,7 @@ function Sortable(rootEl, callback, ghostClass) {
     // Instead of using insertBefore method, other way of visually reflecting
     // order of the items would be to recalculate 'order' property of all items
     // depending on this conditional statement and then sending that data on
-    // 'dragend' event. After that, main window component would listen to
+    // 'dragend' event. After that, app window component would listen to
     // 'list:update' event so that it can update list order accordingly.
     if (offset.y > middleY) {
       rootEl.insertBefore(dragEl, e.target.nextSibling);
